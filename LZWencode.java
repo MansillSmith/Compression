@@ -51,8 +51,14 @@ public class LZWencode{
         public void AddTrie(byte pattern, int index){
             this.next.add(new Trie(pattern, index));
         }
+
+        @Override
+        public String toString(){
+            return this.GetValue() + "," + Integer.toString(this.GetIndex());
+        }
     }
 
+    //Gets the next byte from the the standard input
     private static int nextByte(){
         int nextValue = -1;
         try{
@@ -79,6 +85,7 @@ public class LZWencode{
         int b = nextByte();
         while(true){
             if(b == -1){
+                System.out.println(nextTrie.GetIndex());
                 break;
             }
 
@@ -86,6 +93,8 @@ public class LZWencode{
             prevTrie = thisTrie;
             nextTrie  = thisTrie.PatternFound((byte)b);
 
+            // System.out.println(nextTrie + "\n");
+            
             while(true){
                 b = nextByte();
                 if(b == -1){
@@ -94,10 +103,12 @@ public class LZWencode{
                 }
 
                 //Go down to the next layer of the trie
-                Trie temp = prevTrie;
                 prevTrie = nextTrie;
-                nextTrie = temp.PatternFound((byte)b);
-                
+                nextTrie = nextTrie.PatternFound((byte)b);
+
+                // System.out.println(prevTrie);
+                // System.out.println(nextTrie);
+
                 //If the pattern wasn't found
                 if (nextTrie == null){
                     //Add the new pattern to the prevTrie
@@ -108,6 +119,7 @@ public class LZWencode{
                     System.out.println(prevTrie.GetIndex());
 
                     //Phrase b is then inserted back into the top of the trie
+                    break;
                 }
             }
         }
