@@ -47,29 +47,9 @@ public class LZWencode{
             return null;
         }
 
-        //Adds a new pattern into the trie
-        public int AddPattern(int pattern, int index){
-            //Tests if the pattern already exists
-            for (Trie curr : this.next){
-                //If the pattern already exists, go down the tree
-                if (curr.GetValue() == pattern){
-                    //Read the next value
-                    int nextValue = nextByte();
-
-                    if (nextValue != -1){
-                        return curr.AddPattern(nextValue, index);
-                    }
-                    else{
-                        //TODO: return this index?
-                        //Does that mean the file has ended?
-                        //What happens when the file ends?
-                        return -1;
-                    }
-                }
-            }
-            //The pattern doesn't exists, so add it to the trie
+        //Adds a new trie to the current trie
+        public void AddTrie(byte pattern, int index){
             this.next.add(new Trie(pattern, index));
-            return this.GetIndex();
         }
     }
 
@@ -90,22 +70,46 @@ public class LZWencode{
         Trie thisTrie = lzw.new Trie((byte)0,0);
         int index = 0;
         for (int i = 0; i < 256; i++){
-            thisTrie.AddPattern((byte)i, index);
+            thisTrie.AddTrie((byte)i, index);
             index ++;
         }
 
+        Trie prevTrie = null;
+        Trie nextTrie = null;
+        int b = nextByte();
         while(true){
-            int b = nextByte();
             if(b == -1){
                 break;
             }
 
-            //Add the pattern to the trie
-            int num = thisTrie.AddPattern(b, index);
-            //Print the index
-            System.out.println(num);
-            index ++;
-            break;
+            //Enter the trie
+            prevTrie = thisTrie;
+            nextTrie  = thisTrie.PatternFound((byte)b);
+
+            while(true){
+                b = nextByte();
+                if(b == -1){
+                    //Should hopefully break out of the previous loop too
+                    break;
+                }
+
+                //Go down to the next layer of the trie
+                Trie temp = prevTrie;
+                prevTrie = nextTrie;
+                nextTrie = temp.PatternFound((byte)b);
+                
+                //If the pattern wasn't found
+                if (nextTrie == null){
+                    //Add the new pattern to the prevTrie
+                    prevTrie.AddTrie((byte)b, index);
+                    index++;
+
+                    //Print the phrase number
+                    System.out.println(prevTrie.GetIndex());
+
+                    //Phrase b is then inserted back into the top of the trie
+                }
+            }
         }
     }
 
