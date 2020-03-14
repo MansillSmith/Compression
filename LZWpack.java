@@ -63,7 +63,7 @@ public class LZWpack{
             while (ConditionToWrite(clearBuffer, pointerInBuffer)){
                 //Outputs a byte to standard output
                 byte b = (byte)buffer;
-                System.out.print(b + ",");
+                System.out.print(Character.toString(b));
 
                 //Removes the byte which was just written
                 buffer = buffer >>> 8;
@@ -77,7 +77,6 @@ public class LZWpack{
 
             numberOfPhrases++;
         }
-
 
         scanner.close();
     }
