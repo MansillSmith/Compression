@@ -85,7 +85,7 @@ public class LZWencode{
         int b = nextByte();
         while(true){
             if(b == -1){
-                System.out.println(nextTrie.GetIndex());
+                System.out.print(nextTrie.GetIndex());
                 break;
             }
 
