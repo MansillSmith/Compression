@@ -23,12 +23,17 @@ class LZWunpack{
                 if(numBits >= 8){
                     addToNumber(currentByte, 8);
                     numBits -= 8;
+                    if(numBits == 0){
+                        System.out.println(outputNumber);
+                        outputNumber = 0;
+                        bitsInNum = 0;
+                    }
                 }
                 else{
                     int mask = (2^numBits - 1);
                     int newBits = currentByte & mask;
                     addToNumber(newBits, numBits);
-                    System.out.print(outputNumber);
+                    System.out.println(outputNumber);
                     currentByte = currentByte >>> 3;
                     outputNumber = 0;
                     bitsInNum = 0;
@@ -38,6 +43,7 @@ class LZWunpack{
                     numBits -= remainingBits;
                     addToNumber(currentByte, remainingBits);
                 }
+                numberOfPhrases++;
             }
 
         }catch(Exception e){
