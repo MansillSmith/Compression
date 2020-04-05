@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-//The LZW dictionary stores the entire output for each phrase, rather than a reference to another phrase. This simplies the program significantly
+//The LZW dictionary stores the entire output for each phrase, rather than a reference to another phrase. It trades memory for speed
 class LZWdecode{
     public static void main(String[] args) {
         int inputPhrase;
@@ -48,7 +48,7 @@ class LZWdecode{
             }
             reader.close();
         }catch(Exception e){
-            System.out.println(e);
+            System.err.println(e);
         }
     }
 }
