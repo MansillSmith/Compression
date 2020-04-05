@@ -43,7 +43,9 @@ class LZWdecode{
                         byteArray[i] = copyBytes.get(i);
                     }
 
-                    System.out.print(new String(byteArray));
+                    for(byte b : byteArray){
+                        System.out.print(Character.toString((char)b));
+                    }
                 }
             }
             reader.close();
