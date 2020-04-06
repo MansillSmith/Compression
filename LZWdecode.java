@@ -110,7 +110,14 @@ class LZWdecode{
     private static void printPhrase(int phraseNumber){
         if(phraseNumber != -1){
             printPhrase(storedPhrases.get(phraseNumber).previousPhrase);
-            System.out.print(Character.toString((char)storedPhrases.get(phraseNumber).byteValue));
+            byte[] b = {storedPhrases.get(phraseNumber).byteValue};
+            try{
+                System.out.write(b);
+            }
+            catch (IOException e){
+                System.err.println(e);
+            }
+            //System.out.print(Character.toString((char)storedPhrases.get(phraseNumber).byteValue));
         }
     }
 }
