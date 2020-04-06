@@ -62,9 +62,9 @@ public class LZWpack{
             //While incase there is multiple bytes to write
             while (ConditionToWrite(clearBuffer, pointerInBuffer)){
                 //Outputs a byte to standard output
-                byte b = (byte)buffer;
+                byte[] b = {(byte)buffer};
                 try{
-                    System.out.print(Character.toString((char)b));
+                    System.out.write(b);
                 }
                 catch (Exception e){
                     System.err.println(b);
