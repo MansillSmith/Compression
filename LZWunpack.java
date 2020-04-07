@@ -24,9 +24,12 @@ class LZWunpack{
                     addToNumber(currentByte, 8);
                     numBits -= 8;
                     if(numBits == 0){
-                        System.out.println(outputNumber);
+                        System.out.println(Integer.toString(outputNumber));
                         outputNumber = 0;
                         bitsInNum = 0;
+
+                        numberOfPhrases++;
+                        numBits = numBitsOfNumber(numberOfPhrases);
                     }
                 }
                 else{
@@ -34,7 +37,7 @@ class LZWunpack{
                     int newBits = currentByte & mask;
                     addToNumber(newBits, numBits);
                     System.out.println(outputNumber);
-                    currentByte = currentByte >>> 3;
+                    currentByte = currentByte >>> numBits;
                     outputNumber = 0;
                     bitsInNum = 0;
 
@@ -42,12 +45,14 @@ class LZWunpack{
                     numBits = numBitsOfNumber(numberOfPhrases);
                     numBits -= remainingBits;
                     addToNumber(currentByte, remainingBits);
+
+                    numberOfPhrases++;
                 }
-                numberOfPhrases++;
+                
             }
 
         }catch(Exception e){
-
+            System.err.println(e);
         }
         
     }
