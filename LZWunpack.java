@@ -42,7 +42,7 @@ class LZWunpack{
                 }
                 else{
                     //Create a mask for the number of bits needed to read
-                    int mask = (2^numBits - 1);
+                    int mask = ((int)Math.pow(2,numBits) - 1);
                     //Get only the bits required
                     int newBits = currentByte & mask;
                     //Add to the output number
@@ -83,6 +83,6 @@ class LZWunpack{
         outputNumber = outputNumber | leftShift;
         //Increase the number of bits in the number
         bitsInNum += numBits;
-        System.err.println(outputNumber);
+        //System.err.println(outputNumber);
     }
 }
