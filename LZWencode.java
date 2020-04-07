@@ -92,8 +92,6 @@ public class LZWencode{
             //Enter the trie
             prevTrie = thisTrie;
             nextTrie  = thisTrie.PatternFound((byte)b);
-
-            // System.out.println(nextTrie + "\n");
             
             while(true){
                 b = nextByte();
@@ -105,9 +103,6 @@ public class LZWencode{
                 //Go down to the next layer of the trie
                 prevTrie = nextTrie;
                 nextTrie = nextTrie.PatternFound((byte)b);
-
-                // System.out.println(prevTrie);
-                // System.out.println(nextTrie);
 
                 //If the pattern wasn't found
                 if (nextTrie == null){

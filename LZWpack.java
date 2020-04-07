@@ -56,7 +56,6 @@ public class LZWpack{
             catch (Exception e){
                 clearBuffer = true;
             }
-            //System.out.println(line);
 
             //If there is more than a byte of information to write
             //While incase there is multiple bytes to write
@@ -81,7 +80,6 @@ public class LZWpack{
 
             numberOfPhrases++;
         }
-
         scanner.close();
     }
 }
